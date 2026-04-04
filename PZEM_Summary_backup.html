@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คู่มือและข้อควรระวัง: PZEM DC</title>
+    <style>
+        :root {
+            --primary: #1e293b;
+            --accent: #2563eb;
+            --danger: #dc2626;
+            --success: #16a34a;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg);
+            color: var(--primary);
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 20px;
+        }
+        h1 { font-size: 32px; color: var(--accent); }
+        h2 { 
+            font-size: 24px; 
+            margin: 30px 0 20px; 
+            padding-left: 15px; 
+            border-left: 5px solid var(--accent);
+        }
+        .section-desc { font-style: italic; color: #64748b; margin-bottom: 20px; }
+        
+        .card {
+            background: var(--card-bg);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        .card-title { font-size: 18px; font-weight: bold; margin-bottom: 10px; color: var(--primary); }
+        .card-content { font-size: 16px; margin-bottom: 20px; }
+        .quote { 
+            background: #f1f5f9; 
+            padding: 10px 15px; 
+            border-radius: 6px; 
+            font-weight: bold; 
+            color: var(--accent);
+            margin: 10px 0;
+        }
+        
+        .image-box {
+            width: 100%;
+            background: #fdfdfd;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        .image-box img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .caption { 
+            margin-top: 10px; 
+            font-size: 14px; 
+            font-weight: bold; 
+            color: #475569;
+        }
+
+        .bullet-list {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+        .bullet-list li { margin-bottom: 8px; list-style-type: none; position: relative; padding-left: 25px; }
+        .bullet-list li::before { content: '•'; position: absolute; left: 0; color: var(--accent); font-size: 20px; }
+
+        @media print {
+            body { padding: 0; }
+            .container { max-width: 100%; }
+            .card { break-inside: avoid; shadow: none; border: 1px solid #ccc; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>สรุปการใช้งาน PZEM DC</h1>
+        <p>จัดทำเพื่อการนำเสนอและอ้างอิงการใช้งานวิศวกรรม</p>
+    </header>
+
+    <!-- Section 1: ข้อควรระวัง -->
+    <h2>ข้อควรระวัง</h2>
+    <div class="section-desc">สิ่งที่มาจากคู่มือ: เขียนเป็นข้อเท็จจริง</div>
+    
+    <div class="card">
+        <div class="card-title">1. การใช้งานแรงดันต่ำกว่า 7V</div>
+        <div class="card-content">
+            กรณีแรงดันที่วัดต่ำกว่า 7V ต้องจ่ายไฟเลี้ยง 5V แยกผ่านพอร์ต Micro USB ไม่ควรใช้แหล่งจ่ายที่แรงดันสูงกว่าที่คู่มือกำหนดกับพอร์ตนี้ และไม่ควรใช้ USB จากคอมพิวเตอร์เป็นแหล่งจ่ายไฟเลี้ยงโดยตรง เพราะอาจทำให้อุปกรณ์เสียหายได้
+        </div>
+        <div class="image-box">
+            <img src="file:///C:/Users/User/.gemini/antigravity/brain/44cf3f31-6d69-475c-af35-a45d785c1991/pzem_vin_warning_regen_1775320604756.png" alt="Diagram Vin < 7V">
+            <div class="caption">รูปที่ 1: แรงดันต่ำกว่า 7V ต้องใช้ 5V แยกผ่าน Micro USB</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">2. การตรวจสอบอุปกรณ์แปลงสัญญาณ RS485-to-USB</div>
+        <div class="card-content">
+            ต้องตรวจสอบอุปกรณ์แปลงสัญญาณ RS485-to-USB ให้อยู่ในสภาพปกติก่อนใช้งานจริง
+            <div class="quote">“จากการทดลองพบว่า...”</div>
+            เมื่อใช้อุปกรณ์แปลงสัญญาณที่ชำรุด อาจเกิดการดึงไฟหรือจ่ายไฟผิดปกติ จนทำให้ไอซีภายใน PZEM เสียหายได้ ดังนั้นก่อนเชื่อมต่อควรตรวจสอบตัวแปลง สายสัญญาณ และแรงดันไฟเลี้ยงให้ถูกต้องและปลอดภัย
+        </div>
+        <div class="image-box">
+            <img src="file:///C:/Users/User/.gemini/antigravity/brain/44cf3f31-6d69-475c-af35-a45d785c1991/rs485_damage_warning_regen_1775320621037.png" alt="Broken RS485 Warning">
+            <div class="caption">รูปที่ 2: ตัวแปลงที่ชำรุดอาจทำให้ PZEM เสียหายได้</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">3. พิกัดกระแส (Current Limit)</div>
+        <div class="card-content">
+            ต้องตรวจสอบพิกัดการใช้งานไม่ให้เกิน 10A เนื่องจาก PZEM-003 เป็นรุ่นที่มี Built-in Shunt และรองรับกระแสได้สูงสุดประมาณ 10A หากต้องการวัดกระแสที่มากกว่านี้ควรเลือกใช้ PZEM-017 ซึ่งรองรับการใช้งานร่วมกับ External Shunt ได้เหมาะสมกว่า
+        </div>
+        <div class="image-box">
+            <img src="file:///C:/Users/User/.gemini/antigravity/brain/44cf3f31-6d69-475c-af35-a45d785c1991/current_limit_comparison_regen_1775320638342.png" alt="Current Limit Comparison">
+            <div class="caption">รูปที่ 3: ถ้าเกิน 10A ควรเปลี่ยนรุ่น</div>
+        </div>
+    </div>
+
+    <!-- Section 2: ข้อแนะนำ -->
+    <h2>ข้อแนะนำ</h2>
+    
+    <div class="card">
+        <div class="card-title">1. การสื่อสารและการตั้งค่า Serial</div>
+        <div class="card-content">
+            หากอ่านค่าไม่ได้ ควรตรวจสอบทั้งการต่อสายสื่อสารและการตั้งค่าการสื่อสารตามคู่มือ ให้ตรวจสอบว่าสาย A และ B ต่อถูกต้อง ไม่หลวม และตรวจสอบค่าการสื่อสาร เช่น Baud rate, Data bits, Parity และ Stop bits ให้ตรงตามคู่มือ เพราะค่าที่ใช้ได้อาจแตกต่างกันแม้เป็น PZEM-003 เหมือนกัน หากมาจากคนละล็อตหรือคนละช่วงการผลิต ก็อาจใช้ค่าการสื่อสารไม่เหมือนกันได้ จึงควรอ้างอิงคู่มือของอุปกรณ์ที่ใช้งานจริงเป็นหลัก
+        </div>
+        <div class="image-box">
+            <img src="file:///C:/Users/User/.gemini/antigravity/brain/44cf3f31-6d69-475c-af35-a45d785c1991/communication_troubleshoot_regen_1775320654572.png" alt="Communication Troubleshooting">
+            <div class="caption">รูปที่ 4: ตั้งค่า Serial ให้ตรงคู่มือของแต่ละรุ่น</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">2. ความแน่นของสายไฟเลี้ยง Micro USB</div>
+        <div class="card-content">
+            ควรตรวจสอบความแน่นของสาย Micro USB ที่ใช้เป็นไฟเลี้ยงสำรอง โดยเฉพาะกรณีที่แรงดันต้นทางต่ำกว่า 7V
+            <div class="quote">“จากการทดลองพบว่า...”</div>
+            หากสายหลวม หรือไฟเลี้ยง 5V ไม่เสถียร อาจทำให้โมดูลไม่ทำงานหรืออ่านค่าไม่ออกได้
+        </div>
+        <div class="image-box">
+            <img src="file:///C:/Users/User/.gemini/antigravity/brain/44cf3f31-6d69-475c-af35-a45d785c1991/loose_usb_warning_regen_1775320670135.png" alt="Loose USB Check">
+            <div class="caption">รูปที่ 5: ไฟเลี้ยง 5V ต้องเสถียรเมื่อ Vin < 7V</div>
+        </div>
+    </div>
+
+    <!-- Section 3: Summary Bullet -->
+    <h2>คำสรุปบนชีต (Bullet points)</h2>
+    <div class="bullet-list">
+        <ul>
+            <li>Vin < 7V ต้องใช้ 5V ผ่าน Micro USB</li>
+            <li>ห้ามใช้อุปกรณ์แปลง RS485-to-USB ที่ชำรุด</li>
+            <li>PZEM-003 ใช้ได้ไม่เกิน 10A</li>
+            <li>อ่านค่าไม่ได้ ให้เช็ก A/B และ Serial settings ตามคู่มือ</li>
+            <li>Micro USB หลวม อาจทำให้โมดูลไม่ทำงาน</li>
+        </ul>
+    </div>
+
+</div>
+
+</body>
+</html>

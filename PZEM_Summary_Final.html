@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สรุปข้อควรระวังและข้อแนะนำในการใช้งาน PZEM DC</title>
+    <style>
+        :root {
+            --caution: #dc2626;
+            --recommend: #059669;
+            --primary: #2563eb;
+            --dark: #1e293b;
+            --bg-body: #f1f5f9;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--dark);
+            padding: 40px 20px;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+        .main-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--primary);
+            display: inline-block;
+            width: 100%;
+            padding-bottom: 15px;
+        }
+        
+        .section-header {
+            font-size: 22px;
+            font-weight: bold;
+            padding: 15px 30px;
+            border-radius: 12px;
+            display: block;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+            color: white;
+            text-transform: uppercase;
+        }
+        .section-caution { background-color: var(--caution); border: 1px solid #b91c1c; }
+        .section-recommend { background-color: var(--recommend); border: 1px solid #047857; margin-top: 40px; }
+
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #e2e8f0;
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 25px;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+        .card:hover { transform: translateY(-3px); }
+        .caution-card { border-top: 5px solid var(--caution); }
+        .recommend-card { border-top: 5px solid var(--recommend); }
+
+        .card-title { 
+            font-size: 18px; 
+            font-weight: bold; 
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        .card-content { 
+            font-size: 15px; 
+            color: #334155;
+            text-align: justify;
+        }
+
+        .image-box {
+            background: #f8fafc;
+            border: 1px solid #f1f5f9;
+            border-radius: 10px;
+            padding: 8px;
+            text-align: center;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .image-box:hover { opacity: 0.8; }
+        .image-box img {
+            max-width: 100%;
+            max-height: 180px;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
+        /* Lightbox (Zoom) Effect */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+        }
+        #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border: 5px solid white;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            animation: zoomIn 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.6); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .summary-box {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            margin-top: 50px;
+            border: 2px dashed #cbd5e1;
+        }
+        .summary-title { font-size: 20px; font-weight: bold; margin-bottom: 20px; color: var(--primary); text-align: center; }
+        .summary-box li {
+            margin-bottom: 12px;
+            list-style: none;
+            position: relative;
+            padding-left: 35px;
+            font-size: 15.5px;
+        }
+        .summary-box li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        @media screen and (max-width: 800px) {
+            .card { grid-template-columns: 1fr; }
+            .image-box { order: -1; }
+        }
+        @media print {
+            body { padding: 0; background: none; }
+            .card { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; display: block; }
+            .image-box { margin-top: 15px; cursor: default; }
+            #lightbox { display: none !important; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <h1 class="main-title">สรุปข้อควรระวังและข้อแนะนำในการใช้งาน PZEM DC</h1>
+
+    <!-- SECTION: ข้อควรระวัง -->
+    <div class="section-header section-caution">⚠️ ข้อควรระวัง (Cautions)</div>
+    
+    <div class="card caution-card">
+        <div class="text-zone">
+            <div class="card-title">1. การใช้งานแรงดันต่ำกว่า 7V</div>
+            <div class="card-content">
+                กรณีแรงดันที่วัดต่ำกว่า 7V ต้องจ่ายไฟเลี้ยง 5V แยกผ่านพอร์ต Micro USB ไม่ควรใช้แหล่งจ่ายที่แรงดันสูงกว่าที่คู่มือกำหนดกับพอร์ตนี้ และไม่ควรใช้ USB จากคอมพิวเตอร์เป็นแหล่งจ่ายไฟเลี้ยงโดยตรง เพราะอาจทำให้อุปกรณ์เสียหายได้
+            </div>
+        </div>
+        <div class="image-box" onclick="zoomImage(this)">
+            <img src="img1.png" alt="Vin < 7V Diagram">
+        </div>
+    </div>
+
+    <div class="card caution-card">
+        <div class="text-zone">
+            <div class="card-title">2. การตรวจสอบอุปกรณ์แปลงสัญญาณ RS485-to-USB</div>
+            <div class="card-content">
+                ต้องตรวจสอบอุปกรณ์แปลงสัญญาณ RS485-to-USB ให้อยู่ในสภาพปกติก่อนใช้งานจริง จากการทดลองพบว่า: เมื่อใช้อุปกรณ์แปลงสัญญาณที่ชำรุด อาจเกิดการดึงไฟหรือจ่ายไฟผิดปกติ จนทำให้ไอซีภายใน PZEM เสียหายได้ ดังนั้นก่อนเชื่อมต่อควรตรวจสอบตัวแปลง สายสัญญาณ และแรงดันไฟเลี้ยงให้ถูกต้องและปลอดภัย
+            </div>
+        </div>
+        <div class="image-box" onclick="zoomImage(this)">
+            <img src="img2.png" alt="Broken RS485 Warning">
+        </div>
+    </div>
+
+    <div class="card caution-card">
+        <div class="text-zone">
+            <div class="card-title">3. พิกัดกระแส (Current Limit)</div>
+            <div class="card-content">
+                ต้องตรวจสอบพิกัดการใช้งานไม่ให้เกิน 10A เนื่องจาก PZEM-003 เป็นรุ่นที่มี Built-in Shunt และรองรับกระแสได้สูงสุดประมาณ 10A หากต้องการวัดกระแสที่มากกว่านี้ควรเลือกใช้ PZEM-017 ซึ่งรองรับการใช้งานร่วมกับ External Shunt ได้เหมาะสมกว่า
+            </div>
+        </div>
+        <div class="image-box" onclick="zoomImage(this)">
+            <img src="img3.png" alt="Current Limit Comparison">
+        </div>
+    </div>
+
+    <!-- SECTION: ข้อแนะนำ -->
+    <div class="section-header section-recommend">💡 ข้อแนะนำ (Recommendations)</div>
+    
+    <div class="card recommend-card">
+        <div class="text-zone">
+            <div class="card-title">1. การสื่อสารและการตั้งค่า Serial</div>
+            <div class="card-content">
+                หากอ่านค่าไม่ได้ ควรตรวจสอบทั้งการต่อสายสื่อสารและการตั้งค่าการสื่อสารตามคู่มือ ให้ตรวจสอบว่าสาย A และ B ต่อถูกต้อง ไม่หลวม และตรวจสอบค่าการสื่อสาร เช่น Baud rate, Data bits, Parity และ Stop bits ให้ตรงตามคู่มือ เพราะค่าที่ใช้ได้อาจแตกต่างกันแม้เป็น PZEM-003 เหมือนกัน หากมาจากคนละล็อตหรือคนละช่วงการผลิต ก็อาจใช้ค่าการสื่อสารไม่เหมือนกันได้ จึงควรอ้างอิงคู่มือของอุปกรณ์ที่ใช้งานจริงเป็นหลัก
+            </div>
+        </div>
+        <div class="image-box" onclick="zoomImage(this)">
+            <img src="img4.png" alt="Communication Troubleshooting">
+        </div>
+    </div>
+
+    <div class="card recommend-card">
+        <div class="text-zone">
+            <div class="card-title">2. ความแน่นของสายไฟเลี้ยง Micro USB</div>
+            <div class="card-content">
+                ควรตรวจสอบความแน่นของสาย Micro USB ที่ใช้เป็นไฟเลี้ยงสำรอง โดยเฉพาะกรณีที่แรงดันต้นทางต่ำกว่า 7V จากการทดลองพบว่า: หากสายหลวม หรือไฟเลี้ยง 5V ไม่เสถียร อาจทำให้โมดูลไม่ทำงานหรืออ่านค่าไม่ออกได้
+            </div>
+        </div>
+        <div class="image-box" onclick="zoomImage(this)">
+            <img src="img5.png" alt="Loose USB Check">
+        </div>
+    </div>
+
+    <!-- SECTION: สรุปประเด็นหลัก -->
+    <div class="summary-box">
+        <div class="summary-title">⭐ สรุปประเด็นหลัก</div>
+        <ul>
+            <li>Vin < 7V ต้องใช้ 5V ผ่าน Micro USB</li>
+            <li>ห้ามใช้อุปกรณ์แปลง RS485-to-USB ที่ชำรุด</li>
+            <li>PZEM-003 ใช้ได้ไม่เกิน 10A (หากเกินกว่านั้นใช้ PZEM-017)</li>
+            <li>อ่านค่าไม่ได้ ให้เช็ก A/B และ Serial settings ตามคู่มือ</li>
+            <li>Micro USB หลวม อาจทำให้โมดูลไม่ทำงาน</li>
+        </ul>
+    </div>
+
+</div>
+
+<!-- Lightbox Element -->
+<div id="lightbox" onclick="closeImage()">
+    <img id="lightbox-img" src="">
+</div>
+
+<script>
+    function zoomImage(box) {
+        const imgSrc = box.querySelector('img').src;
+        document.getElementById('lightbox-img').src = imgSrc;
+        document.getElementById('lightbox').style.display = 'flex';
+    }
+    function closeImage() {
+        document.getElementById('lightbox').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
