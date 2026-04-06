@@ -131,6 +131,25 @@
         .lightbox-stage.is-dragging {
             cursor: grabbing;
         }
+        .lightbox-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.18);
+            color: white;
+            font-size: 28px;
+            line-height: 1;
+            cursor: pointer;
+            z-index: 10001;
+            backdrop-filter: blur(6px);
+        }
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.28);
+        }
         #lightbox img {
             max-width: min(90vw, 1200px);
             max-height: 90vh;
@@ -286,7 +305,8 @@
 
 <!-- Simple JS Lightbox -->
 <div id="lightbox" onclick="closeLightbox()">
-    <div class="lightbox-stage" id="lightbox-stage" onclick="event.stopPropagation()">
+    <button class="lightbox-close" type="button" aria-label="Close image" onclick="closeLightbox()">×</button>
+    <div class="lightbox-stage" id="lightbox-stage">
         <img id="zoom-img" src="" alt="">
     </div>
 </div>
@@ -302,6 +322,7 @@
     let activePointers = new Map();
     let dragStart = null;
     let pinchStart = null;
+    let didDrag = false;
 
     function clamp(value, min, max) {
         return Math.min(Math.max(value, min), max);
@@ -317,6 +338,7 @@
         translateY = 0;
         pinchStart = null;
         dragStart = null;
+        didDrag = false;
         activePointers.clear();
         lightboxStage.classList.remove('is-dragging');
         applyTransform();
@@ -406,6 +428,7 @@
         if (activePointers.size === 1 && dragStart && scale > 1) {
             translateX = event.clientX - dragStart.x;
             translateY = event.clientY - dragStart.y;
+            didDrag = true;
             updatePanBounds();
             applyTransform();
         }
@@ -427,24 +450,35 @@
     lightboxStage.addEventListener('pointerup', endPointer);
     lightboxStage.addEventListener('pointercancel', endPointer);
 
+    lightboxStage.addEventListener('click', (event) => {
+        if (event.target === lightboxStage && !didDrag) {
+            closeLightbox();
+        }
+    });
+
     lightboxStage.addEventListener('wheel', (event) => {
         if (event.ctrlKey) {
             event.preventDefault();
-            const zoomStep = event.deltaY < 0 ? 0.15 : -0.15;
+            const zoomStep = -event.deltaY * 0.003;
             setScale(scale + zoomStep);
             return;
         }
 
         if (scale > 1) {
             event.preventDefault();
-            translateX -= event.deltaX;
-            translateY -= event.deltaY;
+            translateX -= event.deltaX * 0.45;
+            translateY -= event.deltaY * 0.45;
             updatePanBounds();
             applyTransform();
         }
     }, { passive: false });
 
     zoomImg.addEventListener('dragstart', (event) => event.preventDefault());
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && lightbox.style.display === 'flex') {
+            closeLightbox();
+        }
+    });
 </script>
 
 </body>
