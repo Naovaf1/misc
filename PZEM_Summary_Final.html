@@ -116,6 +116,9 @@
             align-items: center;
             justify-content: center;
             cursor: zoom-out;
+            overflow: auto;
+            overscroll-behavior: contain;
+            padding: 24px;
         }
         #lightbox img {
             max-width: 90%;
@@ -124,6 +127,12 @@
             border-radius: 12px;
             box-shadow: 0 0 50px rgba(0,0,0,0.5);
             animation: fadeInScale 0.3s ease-out;
+            cursor: default;
+        }
+        body.lightbox-open {
+            position: fixed;
+            overflow: hidden;
+            width: 100%;
         }
         @keyframes fadeInScale {
             from { transform: scale(0.8); opacity: 0; }
@@ -256,15 +265,31 @@
 </div>
 
 <!-- Simple JS Lightbox -->
-<div id="lightbox" onclick="this.style.display='none'">
-    <img id="zoom-img" src="">
+<div id="lightbox" onclick="closeLightbox()">
+    <img id="zoom-img" src="" onclick="event.stopPropagation()">
 </div>
 
 <script>
+    let previousScrollY = 0;
+
     function openLightbox(box) {
         const fullImg = box.querySelector('img').src;
-        document.getElementById('zoom-img').src = fullImg;
-        document.getElementById('lightbox').style.display = 'flex';
+        const lightbox = document.getElementById('lightbox');
+        const zoomImg = document.getElementById('zoom-img');
+
+        previousScrollY = window.scrollY;
+        zoomImg.src = fullImg;
+        document.body.classList.add('lightbox-open');
+        document.body.style.top = `-${previousScrollY}px`;
+        lightbox.style.display = 'flex';
+    }
+
+    function closeLightbox() {
+        const lightbox = document.getElementById('lightbox');
+        lightbox.style.display = 'none';
+        document.body.classList.remove('lightbox-open');
+        document.body.style.top = '';
+        window.scrollTo(0, previousScrollY);
     }
 </script>
 
