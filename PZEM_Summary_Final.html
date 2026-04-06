@@ -36,6 +36,9 @@
             width: 100%;
             padding-bottom: 15px;
         }
+        .title-nowrap {
+            white-space: nowrap;
+        }
         
         .section-header {
             font-size: 22px;
@@ -156,6 +159,12 @@
             .card { grid-template-columns: 1fr; }
             .image-box { order: -1; }
         }
+        @media screen and (max-width: 480px) {
+            .main-title {
+                font-size: 24px;
+                line-height: 1.4;
+            }
+        }
         @media print {
             body { padding: 0; background: none; }
             .card { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; display: block; }
@@ -168,7 +177,7 @@
 <body>
 
 <div class="container">
-    <h1 class="main-title">สรุปข้อควรระวังและข้อแนะนำในการใช้งาน PZEM DC</h1>
+    <h1 class="main-title">สรุปข้อควรระวังและข้อแนะนำในการใช้งาน <span class="title-nowrap">PZEM DC</span></h1>
 
     <div class="section-header section-caution">⚠️ ข้อควรระวัง (Cautions)</div>
     
