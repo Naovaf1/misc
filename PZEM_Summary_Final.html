@@ -306,7 +306,7 @@
 <!-- Simple JS Lightbox -->
 <div id="lightbox" onclick="closeLightbox()">
     <button class="lightbox-close" type="button" aria-label="Close image" onclick="closeLightbox()">×</button>
-    <div class="lightbox-stage" id="lightbox-stage">
+    <div class="lightbox-stage" id="lightbox-stage" onclick="event.stopPropagation()">
         <img id="zoom-img" src="" alt="">
     </div>
 </div>
@@ -449,12 +449,6 @@
 
     lightboxStage.addEventListener('pointerup', endPointer);
     lightboxStage.addEventListener('pointercancel', endPointer);
-
-    lightboxStage.addEventListener('click', (event) => {
-        if (event.target === lightboxStage && !didDrag) {
-            closeLightbox();
-        }
-    });
 
     lightboxStage.addEventListener('wheel', (event) => {
         if (event.ctrlKey) {
