@@ -370,6 +370,10 @@
         return Math.hypot(p1.x - p2.x, p1.y - p2.y);
     }
 
+    function isLikelyMouseWheel(event) {
+        return event.deltaMode === 1 || (Math.abs(event.deltaY) >= 40 && Math.abs(event.deltaX) < 10);
+    }
+
     function openLightbox(box) {
         const fullImg = box.querySelector('img').src;
         previousScrollY = window.scrollY;
@@ -451,9 +455,11 @@
     lightboxStage.addEventListener('pointercancel', endPointer);
 
     lightboxStage.addEventListener('wheel', (event) => {
-        if (event.ctrlKey) {
+        if (event.ctrlKey || isLikelyMouseWheel(event)) {
             event.preventDefault();
-            const zoomStep = -event.deltaY * 0.003;
+            const zoomStep = event.deltaMode === 1
+                ? -event.deltaY * 0.08
+                : -event.deltaY * 0.0015;
             setScale(scale + zoomStep);
             return;
         }
