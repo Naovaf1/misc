@@ -118,6 +118,8 @@
             cursor: zoom-out;
             overflow: auto;
             overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-x pan-y pinch-zoom;
             padding: 24px;
         }
         #lightbox img {
@@ -128,11 +130,12 @@
             box-shadow: 0 0 50px rgba(0,0,0,0.5);
             animation: fadeInScale 0.3s ease-out;
             cursor: default;
+            touch-action: pan-x pan-y pinch-zoom;
         }
+        html.lightbox-open,
         body.lightbox-open {
-            position: fixed;
             overflow: hidden;
-            width: 100%;
+            overscroll-behavior: none;
         }
         @keyframes fadeInScale {
             from { transform: scale(0.8); opacity: 0; }
@@ -270,26 +273,22 @@
 </div>
 
 <script>
-    let previousScrollY = 0;
-
     function openLightbox(box) {
         const fullImg = box.querySelector('img').src;
         const lightbox = document.getElementById('lightbox');
         const zoomImg = document.getElementById('zoom-img');
 
-        previousScrollY = window.scrollY;
         zoomImg.src = fullImg;
+        document.documentElement.classList.add('lightbox-open');
         document.body.classList.add('lightbox-open');
-        document.body.style.top = `-${previousScrollY}px`;
         lightbox.style.display = 'flex';
     }
 
     function closeLightbox() {
         const lightbox = document.getElementById('lightbox');
         lightbox.style.display = 'none';
+        document.documentElement.classList.remove('lightbox-open');
         document.body.classList.remove('lightbox-open');
-        document.body.style.top = '';
-        window.scrollTo(0, previousScrollY);
     }
 </script>
 
